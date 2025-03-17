@@ -1,0 +1,11 @@
+services:
+  postgres_db:
+    image: postgres:15
+    container_name: bepatient_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: bepatient_manager
+      POSTGRES_PASSWORD: bepatient_manager
+      POSTGRES_DB: bepatient_db
+    ports:
+      - "5432:5432"
