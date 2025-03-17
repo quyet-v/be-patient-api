@@ -9,18 +9,20 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="src/" />
     <Folder Include="src/Api/" />
     <Folder Include="src/Api/Controllers/" />
     <Folder Include="src/Api/Models/" />
-    <Folder Include="src/Domain/" />
     <Folder Include="src/Domain/Entities/" />
     <Folder Include="src/Domain/Interfaces/" />
-    <Folder Include="src/Infrastructure/" />
-    <Folder Include="src/Infrastructure/Persistence/" />
     <Folder Include="src/Infrastructure/Persistence/Repositories/" />
     <Folder Include="src/Infrastructure/Services/" />
     <Folder Include="tests/" />
