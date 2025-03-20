@@ -14,8 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDataProtection();
-
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
 ?? throw new InvalidOperationException("Default Connection is not set!");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
@@ -26,6 +24,7 @@ builder.Services.AddIdentity<User, IdentityRole>()
 
 builder.Services.AddAuthentication().AddCookie();
 builder.Services.AddAuthorization();
+builder.Services.AddDataProtection();
 
 var app = builder.Build();
 
