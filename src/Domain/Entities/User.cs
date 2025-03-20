@@ -1,12 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace be_patient_api;
 
-public class User
+public class User : IdentityUser
 {
-    [Key]
-    public int Id {get; set;}
-
     public string FirstName {get; set;}
 
     public string LastName {get; set;}

@@ -1,6 +1,8 @@
 using System;
 using be_patient_api;
-using Microsoft.AspNetCore.Builder; 
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,9 +14,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddDataProtection();
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
 ?? throw new InvalidOperationException("Default Connection is not set!");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+
+builder.Services.AddIdentity<User, IdentityRole>()
+.AddEntityFrameworkStores<AppDbContext>()
+.AddApiEndpoints();
+
+builder.Services.AddAuthentication().AddCookie();
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -22,8 +33,14 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();    
 }
 
 app.UseHttpsRedirection();
+app.MapGet("/", () => "Hello World");
+app.MapIdentityApi<User>();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
