@@ -26,6 +26,25 @@ builder.Services.AddAuthentication().AddCookie();
 builder.Services.AddAuthorization();
 builder.Services.AddDataProtection();
 
+builder.Services.AddHostedService<RoleInitializer>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+const string corsPolicy = "_bePatientClient";
+string allowedOrigins = builder.Configuration.GetSection("AllowedHosts").Get<string>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicy,
+                      policy  =>
+                      {
+                          policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod();
+                      });
+});
+
+builder.Services.AddControllers();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,8 +57,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapGet("/", () => "Hello World");
+app.MapControllers();
 app.MapIdentityApi<User>();
 app.UseAuthentication();
+app.UseCors(corsPolicy);
 app.UseAuthorization();
 
 app.Run();
