@@ -39,7 +39,7 @@ jobs:
               run: dotnet restore
 
             - name: Build app
-              run: dotnet build --configuration Release --no-restore
+              run: dotnet build --configuration Release --no-restore -o ./publish
 
             - name: Upload artifiact
               uses: actions/upload-artifact@v4
@@ -51,8 +51,6 @@ jobs:
     deploy: 
         needs: build
         runs-on: ubuntu-latest
-        environment: release
-        if: github.event_name == 'workflow_dispatch'
         steps:
           - name: Download artifiacts
             uses: actions/download-artifacts@v4
