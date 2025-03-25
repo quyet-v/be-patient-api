@@ -55,7 +55,7 @@ jobs:
           - name: Download artifiacts
             uses: actions/download-artifact@v4
             with: 
-              name: app-artifiact
+              name: app-artifact
               path: ./deploy
 
           - name: Deploy
