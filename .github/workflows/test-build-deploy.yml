@@ -7,20 +7,16 @@ on:
     workflow_dispatch:
 
 jobs:
-    setup:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Setup .NET
-          uses: actions/setup-dotnet@v3
-          with:
-            dotnet-version: '9.0'
-
     test:
-      needs: setup
       runs-on: ubuntu-latest
       steps:
         - name: Checkout
           uses: actions/checkout@v4
+
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v3
+          with:
+            dotnet-version: '9.0'
 
         - name: Restore Dependencies
           run: dotnet restore
@@ -34,6 +30,11 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v3
+              with:
+                dotnet-version: '9.0'
 
             - name: Restore Dependencies
               run: dotnet restore
