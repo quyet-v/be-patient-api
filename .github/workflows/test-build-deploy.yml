@@ -58,5 +58,13 @@ jobs:
               name: app-artifact
               path: ./deploy
 
+          - name: Setup SSH key
+            run: |
+              mkdir -p ~/.ssh
+              echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa.pub
+              chmod 600 ~/.ssh/id_rsa.pub
+              ssh-keyscan -H 170.64.184.169 >> ~/.ssh/known_hosts
+
           - name: Deploy
-            run: echo "Deploying"
+            run: |
+              ssh root@170.64.184.169 "rm -rf /srv/be-patient/*"
