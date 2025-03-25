@@ -1,0 +1,49 @@
+name: Build
+
+on: 
+    pull_request: 
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    test:
+      runs-on: ubuntu-latest
+
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v3
+              with:
+                dotnet-version: '9.0'
+
+            - name: Restore Dependencies
+              run: dotnet restore
+
+            - name: Build app
+              run: dotnet build --configuration Release --no-restore
+
+            - name: Upload artifiact
+              uses: actions/upload-artifact@v4
+              with: 
+                name: app-artifact
+                path: ./publish
+                retention-day: 1
+
+    deploy: 
+        needs: build
+        runs-on: ubuntu-latest
+        if: github.event_name == 'workflow_dispatch'
+        steps:
+          - name: Download artifiacts
+            uses: actions/download-artifacts@v4
+            with: 
+              name: app-artifiact
+              path: ./deploy
+
+          - name: Deploy
+            run: echo "Deploying"
