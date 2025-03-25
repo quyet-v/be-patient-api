@@ -39,7 +39,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: corsPolicy,
                       policy  =>
                       {
-                          policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod();
+                          policy.WithOrigins(["http://localhost:5173", "http://finnancer.xyz"])
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials();
                       });
 });
 
@@ -52,8 +55,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.UseSwagger();
-    app.UseSwaggerUI();    
-}
+    app.UseSwaggerUI();  
+}  
 
 app.UseHttpsRedirection();
 app.MapGet("/", () => "Hello World");
