@@ -70,5 +70,5 @@ jobs:
           - name: Deploy
             run: |
               ssh root@170.64.184.169 "rm -rf /srv/be-patient/*"
-              scp ./deploy/* root@170.64.184.169:/srv/be-patient
+              scp -r ./deploy/* root@170.64.184.169:/srv/be-patient
               ssh root@170.64.184.169 "cp /srv/appsettings.json /srv/be-patient"
