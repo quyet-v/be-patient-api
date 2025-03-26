@@ -52,11 +52,11 @@ jobs:
         # needs: build
         runs-on: ubuntu-latest
         steps:
-          - name: Download artifiacts
-            uses: actions/download-artifact@v4
-            with: 
-              name: app-artifact
-              path: ./deploy
+          # - name: Download artifiacts
+          #   uses: actions/download-artifact@v4
+          #   with: 
+          #     name: app-artifact
+          #     path: ./deploy
 
           - name: Setup SSH key
             run: |
